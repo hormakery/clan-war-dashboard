@@ -1,13 +1,20 @@
 import Reactotron from "reactotron-react-native";
-import { Control, UseFormSetValue, FieldErrors } from "react-hook-form";
 import {
-  ITournamentClan,
+  Control,
+  useForm,
+  FieldErrors,
+  UseFormSetValue,
+  UseFormSetError,
+  UseFormGetValues,
+} from "react-hook-form";
+import {
+  ITournamentHost,
   ITournamentTeam,
 } from "../src/providers/store/reducers/tournament/interfaces";
 
 declare global {
   interface Console {
-    tron: typeof Reactotron["log"];
+    tron: (typeof Reactotron)["log"];
   }
 }
 
@@ -19,7 +26,7 @@ export interface IFormStep {
   title: string;
   isViewable: boolean;
   highlighted: boolean;
-  key: keyof ITournamentClan;
+  key: keyof ITournamentHost;
 }
 
 export interface IAddPlayerFormStep
@@ -27,10 +34,13 @@ export interface IAddPlayerFormStep
   key: keyof ITournamentTeam;
 }
 
-export type FormStepProps<T = ITournamentClan> = {
+export type FormStepProps<T = ITournamentHost> = {
   errors: FieldErrors<T>;
   control: Control<T, any>;
   setValue: UseFormSetValue<T>;
+  setError: UseFormSetError<T>;
+  clearErrors: UseFormClearErrors<T>;
+  getValues: UseFormGetValues<ITournamentHost>;
 };
 
 export interface GroupInterface {

@@ -1,45 +1,45 @@
 import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
-  meet_the_clan: {
-    id: "signup.meet_you",
-    defaultMessage: "We can't wait to meet the clan.",
+  fill_form: {
+    id: "signup.fill",
+    defaultMessage: "Create Tournament ",
   },
-  fill_clan_details: {
-    id: "signup.fill_details",
-    defaultMessage: `Please fill in the name of your clan below to be part of the tournament.`,
+  fill_form_meet: {
+    id: "signup.meet",
+    defaultMessage: "Fill out the following details to create a tournament",
   },
-  enter_the_clan_name: {
-    id: "signup.enter_the_clan_name",
-    defaultMessage: "Please enter your clan name",
+  enter_hostName: {
+    id: "signup.hostName",
+    defaultMessage: "Enter host name",
   },
-  meet_the_team_clan: {
-    id: "signup.meet_the_team_clan",
-    defaultMessage: "History is written by victors.",
+  enter_title: {
+    id: "signup.title",
+    defaultMessage: "Enter tournament title",
   },
-  fill_team_details: {
-    id: "signup.fill_team_details",
-    defaultMessage: `Please fill in the name of the team below that would be playing the tournament.`,
+  enter_price: {
+    id: "signup.price",
+    defaultMessage: "Enter tournament title",
   },
-  enter_the_team_name: {
-    id: "signup.enter_the_team_name",
-    defaultMessage: "Please enter your team name",
+  enter_tag: {
+    id: "signup.tag",
+    defaultMessage: "Enter tag",
   },
-  our_clan_logo: {
-    id: "signup.our_clan_logo",
-    defaultMessage: `A logo once seen by the enemy will never be forgotten!`,
+  enter_team_size: {
+    id: "signup.teamSize",
+    defaultMessage: "Enter team size",
   },
-  clan_logo_details: {
-    id: "signup.clan_logo_details",
-    defaultMessage: `Please select and upload a logo of your clan for the tournament.`,
+  enter_participates: {
+    id: "signup.participates",
+    defaultMessage: "Enter number of participates",
   },
-  build_clan_team: {
-    id: "signup.build_clan_team",
-    defaultMessage: `Alone we can win lobbies, but together we can win tournaments.`,
+  enter_orgarnisers :{
+    id: "signup.organiser",
+    defaultMessage: "organised by",
   },
-  build_clan_team_details: {
-    id: "signup.build_clan_team_details",
-    defaultMessage: `Build your team of four players, for coming together is a beginning, staying together is progress, and working together is success.`,
+  save: {
+    id: "signup.save",
+    defaultMessage: "save",
   },
   confirm_submission: {
     id: "signup.confirm_submission",

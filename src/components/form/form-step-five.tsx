@@ -17,7 +17,7 @@ import {
   InputContents,
   UserContainer,
   NextStepButton,
-} from "./add-player-modal.styles";
+} from "./form-styles";
 import { FormStepProps } from "../../../types";
 
 type FormStepOneProps = {
@@ -32,7 +32,7 @@ export const FormStepOne: React.FC<FormStepOneProps> = ({
   isScreenLessThanMaxWidth,
 }) => {
   const user_id = useRef(generateId()).current;
-  const { playerIgnValidation } = useFormValidation();
+  const { titleValidation } = useFormValidation();
   const { watch } = useForm<Partial<ITournamentTeam>>();
 
   const player_ign = watch("player_ign");
@@ -43,26 +43,25 @@ export const FormStepOne: React.FC<FormStepOneProps> = ({
       <UserContainer>
         <Icon name="avatar" />
         <UserContents>
-          {player_ign && <UserIGN>{player_ign}</UserIGN>}
           <SubTitle isActive={false}>
-            {user_id.substring(0, 8)}...{user_id.substring(10, 22)}
+            {subtitle}
           </SubTitle>
         </UserContents>
       </UserContainer>
 
       <Spacer size={15} />
       <Controller
-        name="player_ign"
+        name="title"
         control={control}
-        rules={playerIgnValidation}
+        rules={titleValidation}
         render={({ field: { onChange, ref, ...rest } }) => (
           <Input
             {...rest}
             maxLength={14}
             onChangeText={onChange}
-            label="Enter player IGN"
+            label="Enter title"
             placeholder="十・Drifter"
-            error={errors.player_ign}
+            error={errors.title}
           />
         )}
       />

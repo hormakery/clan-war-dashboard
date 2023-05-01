@@ -2,16 +2,13 @@ import "react-native-gesture-handler";
 import "@expo/match-media";
 
 import * as React from "react";
-import { Platform } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import ErrorBoundary from "react-native-error-boundary";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { Providers } from "./src/providers";
 import { Navigation } from "./src/navigation";
-import { WebTabs } from "./src/navigation/tabs-web";
 import { CrashScreen } from "./src/components/error-boundary";
-import { AddPlayerModal } from "./src/components/add-player-modal";
 import * as serviceWorkerRegistration from "./src/service-worker-registration";
 
 if (__DEV__) {
@@ -30,8 +27,6 @@ export default function App() {
       <ErrorBoundary FallbackComponent={CrashScreen}>
         <Providers>
           <Navigation />
-          {Platform.select({ web: <WebTabs /> })}
-          <AddPlayerModal />
         </Providers>
       </ErrorBoundary>
     </GestureHandlerRootView>

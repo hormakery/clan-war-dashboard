@@ -13,9 +13,7 @@ import {
 
 import {
   settingsReducer,
-  tournamentReducer,
   SETTINGS_SLICE_NAME,
-  TOURNAMENT_SLICE_NAME,
 } from "./reducers";
 import { APP_VERSION, __ROOT_REDUX_STATE_KEY__ } from "../../constants";
 
@@ -38,7 +36,6 @@ const reactotronEnhancer = (): any => {
 
 const rootReducer = combineReducers({
   [SETTINGS_SLICE_NAME]: settingsReducer,
-  [TOURNAMENT_SLICE_NAME]: tournamentReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -62,7 +59,7 @@ persistor.purge();
 persistor.flush();
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 
 // Inferred type: {settings: SettingsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;

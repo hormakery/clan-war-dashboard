@@ -5,15 +5,11 @@ import {
   DefaultTheme,
   NavigationContainer,
 } from "@react-navigation/native";
-import { Platform } from "react-native";
 import { useTheme } from "styled-components/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import { TabNavigator } from "./tabs";
-import { BackButton } from "./styles";
 import { usePrepareApp } from "../hooks";
 import { HomeScreen } from "../screens/home";
-import { SignUpScreen } from "../screens/signup";
 import { StackParamList } from "../../types/navigation";
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -50,30 +46,10 @@ export const Navigation = () => {
           name="HomeScreen"
           component={HomeScreen}
           options={{
+            title: "create tournaments",
             headerTitleStyle: { color: palette.transparent },
-            title: Platform.select({ default: "", web: "tournaments" }),
           }}
         />
-
-        <Stack.Screen
-          name="SignUpScreen"
-          component={SignUpScreen}
-          options={{
-            title: "sign up",
-            headerShown: true,
-            headerLeft: (props) => <BackButton {...props} />,
-          }}
-        />
-
-        {Platform.select({
-          native: (
-            <Stack.Screen
-              name="DetailsScreen"
-              component={TabNavigator}
-              options={{ presentation: "modal" }}
-            />
-          ),
-        })}
       </Stack.Navigator>
     </NavigationContainer>
   );

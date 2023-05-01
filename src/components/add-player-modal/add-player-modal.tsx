@@ -11,8 +11,8 @@ import BottomSheet, {
 } from "@gorhom/bottom-sheet";
 
 import { generateId } from "../../helpers";
-import { FormStepOne } from "./form-step-one";
-import { FormStepTwo } from "./form-step-two";
+import { FormStepOne } from "./form-step-two";
+import { FormStepTwo } from "./form-step-one";
 import { IAddPlayerFormStep } from "../../../types";
 import { BottomSheetBackdrop } from "../modal-backdrop";
 import { RootState } from "../../providers/store/store";
@@ -79,7 +79,7 @@ export const AddPlayerModal: React.FC = () => {
   } = useForm<Partial<ITournamentTeam>>();
 
   const { isAddPlayerModalVisible } = useSelector(
-    ({ settings }: RootState) => settings,
+    ({ settings }) => settings,
     shallowEqual
   );
 

@@ -171,3 +171,13 @@ export const AvatarScrollView = styled.ScrollView.attrs({
 export const Avatar = styled.TouchableOpacity`
   border-radius: 100%;
 `;
+
+
+export const FormTitle = styled(Title)`
+  font-size: ${(p) => p.theme.fonts.scale.value(32)}px;
+
+`;
+
+export const FormSubTitle = styled(SubTitle)`
+
+`;

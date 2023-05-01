@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import { Platform, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -7,7 +7,6 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { APP_NAME } from "../../constants";
 import { formatCurrency } from "../../helpers";
-import { getImagekitUrl } from "../../helpers/imagekit";
 import { ITournament } from "../../providers/store/reducers/tournament/interfaces";
 
 import {
@@ -51,17 +50,16 @@ export const Tournament: React.FC<TournamentProps> = (props) => {
     title,
     tags = [],
     team_size,
-    host_clan,
     room_size,
     start_date,
     price_pool,
-    created_at,
     cover_image,
     participates,
     onEventPress,
     winner_clan_id,
-    tournament_icon,
     joinTournament,
+    tournament_icon,
+    tournament_host,
   } = props;
 
   const isEventStarted = dayjs().unix() >= dayjs(start_date).unix();
@@ -77,32 +75,12 @@ export const Tournament: React.FC<TournamentProps> = (props) => {
     onEventPress(id);
   };
 
-  const tournamentImage = useMemo(
-    () =>
-      getImagekitUrl((cover_image || tournament_icon)!, {
-        directory: "tournament_cover",
-      }),
-    [cover_image, tournament_icon]
-  );
-
-  const clanLogoImage = useMemo(
-    () => getImagekitUrl(host_clan.clan_logo, { directory: "clan_logo" }),
-    [host_clan.clan_logo]
-  );
-
   return (
-    <Container
-      activeOpacity={0.5}
-      onPress={() => onEventPress(id)}
-      disabled={isEventFinished || isEventStarted}
-    >
+    <Container activeOpacity={0.5} onPress={() => onEventPress(id)}>
       <TopContents>
         {cover_image ? (
           <View>
-            <HeroImage
-              uri={tournamentImage.url}
-              preview={{ uri: tournamentImage.preview }}
-            />
+            <HeroImage uri={cover_image} preview={{ uri: cover_image }} />
             <LinearGradient colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.3)"]} />
           </View>
         ) : null}
@@ -112,8 +90,8 @@ export const Tournament: React.FC<TournamentProps> = (props) => {
             {tournament_icon && <TournamentIcon uri={tournament_icon} />}
             <TimerContentWrapper>
               <Timer>
-                {dayjs(created_at).format("dddd DD MMMM")} • Starting at{" "}
-                {dayjs(created_at).format("hh : mm")}
+                {dayjs(start_date).format("dddd DD MMMM")} • Starting at
+                {dayjs(start_date).format(" hh:mm A")}
               </Timer>
 
               <TitleWrapper>
@@ -168,7 +146,7 @@ export const Tournament: React.FC<TournamentProps> = (props) => {
                   color={hexToRGB(palette.text, 0.4)}
                 />
                 <PriceSubtitle>
-                  {participates.length}/{room_size}
+                  {participates}/{room_size}
                 </PriceSubtitle>
               </PriceTrophy>
             </PriceWrapper>
@@ -179,22 +157,23 @@ export const Tournament: React.FC<TournamentProps> = (props) => {
       <BottomContents>
         <Profile>
           <HostLogo
-            uri={clanLogoImage.url}
-            preview={{ uri: clanLogoImage.preview }}
+            uri={tournament_host.avatar}
+            preview={{ uri: tournament_host.avatar }}
           />
           <HostDetail>
             <Description>Organized by</Description>
             <Organizer numberOfLines={1}>
-              {host_clan.clan_name || APP_NAME}
+              {tournament_host.name || APP_NAME}
             </Organizer>
           </HostDetail>
         </Profile>
 
         <EventDetailsButton
           onPress={handleButtonPress}
+          isEventFinished={isEventFinished}
           isEventStarted={isEventStarted && !isEventFinished}
           icon={() =>
-            isEventFinished || !isEventStarted ? (
+            !isEventFinished || !isEventStarted ? (
               <Ionicons
                 size={20}
                 color={colors.dark.text}
@@ -205,9 +184,9 @@ export const Tournament: React.FC<TournamentProps> = (props) => {
           }
         >
           {isEventFinished
-            ? "Event Details"
+            ? "Event details"
             : isEventStarted
-            ? "Started"
+            ? "Event started"
             : "Join event"}
           <Ionicons size={24} color="white" />
         </EventDetailsButton>

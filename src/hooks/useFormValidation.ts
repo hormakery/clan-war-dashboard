@@ -1,19 +1,10 @@
 import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({
-  email_required: {
-    id: "form.validator.email_required",
-    defaultMessage: "Email is required",
-  },
 
-  email_valid: {
-    id: "form.validator.email_valid",
-    defaultMessage: "Enter a valid email address",
-  },
-
-  clan_name_required: {
-    id: "form.validator.clan_name_required",
-    defaultMessage: "Clan is required",
+ host_name_required: {
+    id: "form.validator.host_name_required",
+    defaultMessage: "Host is required",
   },
 
   team_name_required: {
@@ -21,9 +12,19 @@ const messages = defineMessages({
     defaultMessage: "Team name is required",
   },
 
-  player_ign_required: {
-    id: "form.validator.player_ign_required",
-    defaultMessage: "Player ign is required",
+  price_required: {
+    id: "form.validator.price_required",
+    defaultMessage: "Price is required",
+  },
+
+  title_required: {
+    id: "form.validator.title_required",
+    defaultMessage: "Title is required",
+  },
+
+  tags_required: {
+    id: "form.validator.tags_required",
+    defaultMessage: "Tags is required",
   },
 
   avatar_required: {
@@ -31,32 +32,20 @@ const messages = defineMessages({
     defaultMessage: "Player avatar is required",
   },
 
-  clan_log_required: {
-    id: "form.validator.clan_log_required",
-    defaultMessage: "Clan logo is required",
+  host_logo_required: {
+    id: "form.validator.host_logo_required",
+    defaultMessage: "Host logo is required",
   },
 });
 
 export const useFormValidation = () => {
   const intl = useIntl();
 
-  const emailValidation = {
+
+  const hostNameValidation = {
     required: {
       value: true,
-      message: intl.formatMessage(messages.email_required),
-    },
-
-    pattern: {
-      value:
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i,
-      message: intl.formatMessage(messages.email_valid),
-    },
-  };
-
-  const clanNameValidation = {
-    required: {
-      value: true,
-      message: intl.formatMessage(messages.clan_name_required),
+      message: intl.formatMessage(messages.host_name_required),
     },
   };
 
@@ -67,12 +56,7 @@ export const useFormValidation = () => {
     },
   };
 
-  const playerIgnValidation = {
-    required: {
-      value: true,
-      message: intl.formatMessage(messages.player_ign_required),
-    },
-  };
+  
 
   const teamNameValidation = {
     required: {
@@ -81,19 +65,33 @@ export const useFormValidation = () => {
     },
   };
 
-  const clanLogoValidation = {
+  const hostLogoValidation = {
     required: {
       value: true,
-      message: intl.formatMessage(messages.clan_log_required),
+      message: intl.formatMessage(messages.host_logo_required),
+    },
+  };
+
+  const titleValidation = {
+    required: {
+      value: true,
+      message: intl.formatMessage(messages.title_required),
+    },
+  };
+
+  const priceValidation = {
+    required: {
+      value: true,
+      message: intl.formatMessage(messages.price_required),
     },
   };
 
   return {
-    emailValidation,
+    priceValidation,
+    titleValidation,
     avatarValidation,
-    clanLogoValidation,
-    clanNameValidation,
+    hostLogoValidation,
+    hostNameValidation,
     teamNameValidation,
-    playerIgnValidation,
   };
 };
