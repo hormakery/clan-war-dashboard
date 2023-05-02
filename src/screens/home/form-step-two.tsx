@@ -1,57 +1,52 @@
-import React, { Fragment, useMemo } from "react";
-import { Image, Linking } from "react-native";
+import React, { Fragment } from "react";
+import { Controller } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { useTheme } from "styled-components/native";
-import * as ImagePicker from "expo-image-picker";
 import Animated, { FadeInUp, FadeOutUp } from "react-native-reanimated";
 
-
-import { Controller, useForm } from "react-hook-form";
-
-import { Icon } from "../icon";
 import messages from "./messages";
 import { getLogoSize } from "../../helpers";
 import { FormStepProps } from "../../../types";
-const { isMinScreenSize, isDesktopOrLaptop } = useResponsiveScreen();
-
-import { useLogoUpload, useFormValidation, useOnLayout, useResponsiveScreen } from "../../hooks";
-
+import * as ImagePicker from "expo-image-picker";
+import { Linking, Platform } from "react-native";
+import {
+  useOnLayout,
+  useLogoUpload,
+  useFormValidation,
+} from "../../hooks";
 
 import {
-  Label,
-  Spacer,
-  Avatar,
-  FormTitle,
-  FormSubTitle,
-  ErrorMessage,
-  InputContents,
-  NextStepButton,
-  AvatarScrollView,
-  ErrorMessageContainer,
-  LogoContainer,
-  LogoContents,
-  SubTitle,
   Title,
-  LogoUploadContainer,
+  Image,
+  Spacer,
+  Divider,
+  SubTitle,
+  UploadIcon,
+  GoBackButton,
+  ErrorMessage,
+  ContentTitle,
+  LogoContents,
+  LogoContainer,
   UploadProgress,
+  NextStepButton,
+  ContentSubTitle,
+  ButtonContainer,
   ProgressSubTitle,
+  ContentContainer,
   UploadProgressBar,
   UploadIconContainer,
-  UploadIcon,
-} from "./form-styles";
+  LogoUploadContainer,
+  ErrorMessageContainer,
+} from "./home.styles";
 
-
-type FormStepProps = {
-  onButtonPress: VoidFunction;
-  isScreenLessThanMaxWidth: boolean;
-} 
-
-export const FormStepOne: React.FC<FormStepProps> = ({
+export const FormStepTwo: React.FC<FormStepProps> = ({
+  watch,
   errors,
+  goNext,
+  goBack,
   control,
   setValue,
   setError,
-  getValues,
   clearErrors,
 }) => {
   const { layout, palette, hexToRGB } = useTheme();
@@ -66,14 +61,12 @@ export const FormStepOne: React.FC<FormStepProps> = ({
     progress: uploadedProgress,
   } = useLogoUpload();
 
+
   const progress =
-    (Number(progressLayout?.width || 0) / 100) * uploadedProgress;
+    (Number(progressLayout?.width || 0) / 100) *
+    (isComplete ? 100 : uploadedProgress);
 
-  const host_logo = getValues("host_logo");
-  const host_name = getValues("host_name");
-
-  const MAX_WIDTH = breakpoints.tablet_viewport;
-  const isScreenLessThanMaxWidth = isMinScreenSize(MAX_WIDTH);
+  const [cover_image, title] = watch(["cover_image", "title"]);
 
   const pickLogo = async (): Promise<void> => {
     const status = await requestPermission();
@@ -100,64 +93,85 @@ export const FormStepOne: React.FC<FormStepProps> = ({
 
     const file = result.assets[0];
     const EXTENSIONS = ["png", "jpeg", "jpg", "gif"];
-    const extension = file.uri?.split(";")[0].split("/")[1];
+    const extension = Platform.select({
+      web: file.uri?.split(";")[0].split("/")[1],
+      default: file.uri.substring(file.uri.length - 4).split(".")[1],
+    });
 
     if (!EXTENSIONS.includes(extension)) {
-      return setError("host_logo", { message: "Image format not supported" });
+      return setError("cover_image", { message: "Image format not supported" });
     }
 
     const fileSize = getLogoSize(file.uri!, file.fileSize);
 
     if (fileSize > 600) {
-      return setError("host_logo", { message: "Max file size is 500kb" });
+      return setError("cover_image", { message: "Max file size is 500kb" });
     }
 
-    if (errors.host_logo) {
-      clearErrors("host_logo");
+    if (errors.cover_image) {
+      clearErrors("cover_image");
     }
 
-    const fileName = `${host_name.trim().split(" ").join("-")}-${
+    const fileName = `${cover_image?.trim().split(" ").join("-")}-${
       file.fileName || Date.now()
     }`.toLowerCase();
 
     uploadLogo({ ...file, extension, fileName })
-      .then((url) => setValue("host_logo", url))
-      .catch((error) => setError("host_logo", { message: error.message }));
+      .then((url) => setValue("cover_image", url))
+      .catch((error) => setError("cover_image", { message: error.message }));
   };
 
   const handleCancelUpload = () => {
-    setValue("host_logo", "");
+    setValue("cover_image", "");
     cancelUpload();
   };
 
   return (
-    <InputContents>
+    <Fragment>
+      <ContentContainer>
+        <ContentSubTitle isActive={false}>Step 2/5</ContentSubTitle>
+        <Spacer size={10} />
+
+        <ContentTitle>
+          <FormattedMessage {...messages.click_to_add_image} />
+        </ContentTitle>
+        <Spacer size={10} />
+
+        <ContentSubTitle isActive={false}>
+          <FormattedMessage {...messages.image_support} />
+        </ContentSubTitle>
+      </ContentContainer>
+
+      <Spacer size={30} />
+
+      <Divider />
+      <Spacer size={30} />
+
       <Controller
-        name="host_logo"
+        name="cover_image"
         control={control}
-        rules={hostLogoValidation}
+        // rules={clanLogoValidation}
         render={() => (
           <Fragment>
-            <ErrorMessageContainer>
-              {<Label error={!!errors.avatar}>Select an image</Label>}
-              {errors.avatar && (
-                <ErrorMessage>{errors.host_logo.message}</ErrorMessage>
-              )}
-            </ErrorMessageContainer>
+            {errors.cover_image && (
+              <ErrorMessageContainer>
+                <ErrorMessage>{errors.cover_image.message}</ErrorMessage>
+              </ErrorMessageContainer>
+            )}
 
-            
             <LogoContainer>
-              <LogoContents onPress={pickLogo} error={!!errors.clan_logo}>
-                <Image source={require("../../../../assets/gallery.png")} />
-                <Title size={16} error={!!errors.clan_logo}>
+              <LogoContents onPress={pickLogo} error={!!errors.cover_image}>
+                <Image source={require("../../../assets/gallery.png")} />
+                <Title size={16} error={!!errors.cover_image}>
                   <FormattedMessage {...messages.click_to_add_image} />
                 </Title>
+                <Spacer size={10} />
                 <SubTitle size={12}>
                   <FormattedMessage {...messages.image_support} />
                 </SubTitle>
               </LogoContents>
 
-              {isLoading || host_logo ? (
+              {isLoading || cover_image ? (
                 <Animated.View entering={FadeInUp} exiting={FadeOutUp}>
                   <LogoUploadContainer onLayout={onLayout}>
                     <UploadProgress
@@ -209,24 +223,30 @@ export const FormStepOne: React.FC<FormStepProps> = ({
                 </Animated.View>
               ) : null}
             </LogoContainer>
-            
           </Fragment>
         )}
       />
 
       <Spacer size={60} />
-      <NextStepButton
-        onPress={onButtonPress}
-        style={{
-          elevation: 5,
-          shadowRadius: 3.84,
-          shadowOpacity: 0.25,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 2 },
-        }}
-      >
-        <FormattedMessage {...messages.save} />
-      </NextStepButton>
-    </InputContents>
+
+      <ButtonContainer>
+          <GoBackButton onPress={goBack}>
+            <FormattedMessage {...messages.back} />
+          </GoBackButton>
+        <NextStepButton
+          onPress={goNext}
+          style={{
+            elevation: 5,
+            shadowRadius: 3.84,
+            shadowOpacity: 0.25,
+            shadowColor: "#000",
+
+            shadowOffset: { width: 0, height: 2 },
+          }}
+        >
+          <FormattedMessage {...messages.next_step} />
+        </NextStepButton>
+      </ButtonContainer>
+    </Fragment>
   );
 };

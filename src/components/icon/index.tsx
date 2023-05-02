@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Avatar } from "./avatar";
 import { appIcons, IconProps } from "./interface";
 
 export const Icon: React.FC<IconProps> = React.memo(
@@ -9,7 +8,7 @@ export const Icon: React.FC<IconProps> = React.memo(
       ? { width: props.size, height: props.size }
       : {};
 
-    const Component = props.name === "avatar" ? Avatar : appIcons[props.name];
+    const Component = appIcons[props.name];
 
     return (
       <Component

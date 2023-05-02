@@ -3,14 +3,15 @@ import {
   Control,
   useForm,
   FieldErrors,
+  UseFormWatch,
   UseFormSetValue,
   UseFormSetError,
   UseFormGetValues,
 } from "react-hook-form";
 import {
-  ITournamentHost,
+  ITournament,
   ITournamentTeam,
-} from "../src/providers/store/reducers/tournament/interfaces";
+} from "./tournament";
 
 declare global {
   interface Console {
@@ -26,24 +27,17 @@ export interface IFormStep {
   title: string;
   isViewable: boolean;
   highlighted: boolean;
-  key: keyof ITournamentHost;
+  key: keyof ITournament;
 }
 
-export interface IAddPlayerFormStep
-  extends Omit<IFormStep, "icon" | "highlighted"> {
-  key: keyof ITournamentTeam;
-}
-
-export type FormStepProps<T = ITournamentHost> = {
+export type FormStepProps<T = ITournament> = {
+  goNext: VoidFunction
+  goBack: VoidFunction
+  watch: UseFormWatch<T>;
   errors: FieldErrors<T>;
   control: Control<T, any>;
   setValue: UseFormSetValue<T>;
   setError: UseFormSetError<T>;
   clearErrors: UseFormClearErrors<T>;
-  getValues: UseFormGetValues<ITournamentHost>;
+  getValues: UseFormGetValues<ITournament>;
 };
-
-export interface GroupInterface {
-  id: number;
-  name: string;
-}

@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 
 export const Container = styled.View<{ error?: boolean; isFocused: boolean }>`
   padding: 0 16px;
-  min-height: 50px;
+  min-height: 70px;
   flex-direction: row;
   border-radius: ${(p) => p.theme.layout.radius}px;
   background-color: ${(p) => {

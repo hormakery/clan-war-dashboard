@@ -18,7 +18,5 @@ export interface ISettingsState {
   locale: Locale;
   screen: SwitchScreen;
   colorMode: IColorMode;
-  isDetailModalVisible: boolean;
   isReceiveNotifications: boolean;
-  isAddPlayerModalVisible: boolean;
 }

@@ -9,19 +9,23 @@ const messages = defineMessages({
     id: "signup.fill_details",
     defaultMessage: `Please fill in the name of your clan below to be part of the tournament.`,
   },
-  enter_the_clan_name: {
-    id: "signup.enter_the_clan_name",
-    defaultMessage: "Please enter your clan name",
+  enter_price: {
+    id: "signup.enter_price",
+    defaultMessage: "How much does this cost?",
+  },
+  enter_tornament_price: {
+    id: "signup.enter_tournament_price",
+    defaultMessage: "Please enter Tournament Price",
   },
   meet_the_team_clan: {
     id: "signup.meet_the_team_clan",
     defaultMessage: "History is written by victors.",
   },
-  fill_team_details: {
+  fill_host_details: {
     id: "signup.fill_team_details",
     defaultMessage: `Please fill in the name of the team below that would be playing the tournament.`,
   },
-  enter_the_team_name: {
+  enter_host_name: {
     id: "signup.enter_the_team_name",
     defaultMessage: "Please enter your team name",
   },
@@ -113,6 +117,14 @@ const messages = defineMessages({
   complete_submission: {
     id: "signup.complete_submission",
     defaultMessage: "complete submission",
+  },
+  get_started: {
+    id: "signup.get_started_title",
+    defaultMessage: "Lets get started with your name.",
+  },
+  get_started_subtitle: {
+    id: "signup.get_started_title",
+    defaultMessage: "Please fill in the details below so that we can get started.",
   },
 });
 

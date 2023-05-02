@@ -1,24 +1,20 @@
 import React, { useState, useRef, Fragment } from "react";
-import { shallowEqual } from "react-redux";
-import { FormattedMessage } from "react-intl";
+import { ScrollView } from "react-native";
+import { useTheme } from "styled-components/native";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
 
-import messages from "./messages";
-import { useSelector } from "../../hooks";
 import { IFormStep } from "../../../types";
 import { generateId } from "../../helpers";
+import { useResponsiveScreen } from "../../hooks";
+import { ITournament } from "../../../types/tournament";
 import { RootStackScreenProps } from "../../../types/navigation";
-// import { ITournamentClan } from "../../providers/store/reducers/tournament/interfaces";
-import {
-  FormStepIndicator,
-  FormStepOne,
-  // FormStepTwo,
-  // FormStepFive,
-  // FormStepFour,
-  // FormStepThree,
-  // FormStepIndicator,
-} from "../../components/form";
+
+import { FormStepOne } from "./form-step-one";
+import { FormStepTwo} from "./form-step-two";
+import { FormStepFour } from "./form-step-four";
+import { FormStepFive } from "./form-step-five";
+import { FormStepThree } from "./form-step-three";
 
 import {
   Step,
@@ -35,11 +31,8 @@ import {
   StepScrollView,
   NextStepButton,
   ButtonContainer,
-  MaxWidthContainer,
-  // FormStepScrollViewWrapper,
+  MaxWidthWrapper
 } from "./home.styles";
-import { ScrollView } from "react-native";
-import { useTheme } from "styled-components";
 
 const defaultFormSteps: IFormStep[] = [
   {
@@ -86,10 +79,10 @@ const defaultFormSteps: IFormStep[] = [
 
 const forms = [
   FormStepOne,
-  // FormStepTwo,
-  // FormStepThree,
-  // FormStepFour,
-  // FormStepFive,
+  FormStepTwo,
+  FormStepThree,
+  FormStepFour,
+  FormStepFive,
 ];
 
 export const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
@@ -99,15 +92,11 @@ export const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   const scrollRef = useRef<ScrollView>(null);
   const { palette, layout, breakpoints } = useTheme();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { isDesktopOrLaptop } = useResponsiveScreen();
   const [formSteps, setFormSteps] = useState(defaultFormSteps);
-  const [clan, setClan] = useState<ITournamentClan | null>(null);
-
-  const { selectedTournament } = useSelector(
-    ({ tournament }) => tournament,
-    shallowEqual
-  );
 
   const {
+    watch,
     control,
     trigger,
     setError,
@@ -117,7 +106,7 @@ export const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
     handleSubmit,
     getFieldState,
     formState: { errors },
-  } = useForm<ITournamentClan>();
+  } = useForm<ITournament>();
 
 
   const isFirstPageOfFormActive = currentIndex === 0;
@@ -168,33 +157,20 @@ export const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
   };
 
 
-  const onSubmit: SubmitHandler<ITournamentClan> = (data) => {
-    setHost(data);
+  const onSubmit: SubmitHandler<ITournament> = (data) => {
+    // setHost(data);
   };
 
-  const MAX_WIDTH = breakpoints.tablet_viewport;
-  const isScreenLessThanMaxWidth = isMinScreenSize(MAX_WIDTH);
-
-  
-
   return (
-    <Container  isScreenLessThanMaxWidth={isScreenLessThanMaxWidth}>
-      <MaxWidthContainer>
-        <FormStepIndicator
-          steps={formSteps}
-          onChange={handleFormStep}
-          currentIndex={currentIndex}
-        />
-
-        <StepContainer isScreenLessThanMaxWidth={isScreenLessThanMaxWidth}>
-          <Title wrap>Anonymous eSport</Title>
+    <Container isDesktopOrLaptop={isDesktopOrLaptop}>
+        <StepContainer isDesktopOrLaptop={isDesktopOrLaptop}>
           <Spacer size={15} />
-          <SubTitle>Register your player</SubTitle>
-          <Spacer size={30} />
+          <Title size={25}>Create new tournament</Title>
+          <Spacer size={50} />
 
           <StepScrollView
-            ref={scroll}
-            isScreenLessThanMaxWidth={isScreenLessThanMaxWidth}
+            ref={scrollRef}
+            isDesktopOrLaptop={isDesktopOrLaptop}
           >
             {formSteps.map(({ id, isViewable, title }, index) => (
               <Fragment key={id}>
@@ -213,7 +189,7 @@ export const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
 
                 {index === 0 && (
                   <StepDivider
-                    isScreenLessThanMaxWidth={isScreenLessThanMaxWidth}
+                    isDesktopOrLaptop={isDesktopOrLaptop}
                   />
                 )}
               </Fragment>
@@ -221,7 +197,9 @@ export const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
           </StepScrollView>
         </StepContainer>
 
-        <InputContainer isScreenLessThanMaxWidth={isScreenLessThanMaxWidth}>
+        <InputContainer isDesktopOrLaptop={isDesktopOrLaptop}>
+         <Spacer size={90} />
+          <MaxWidthWrapper>
           {forms.map((Form, index) =>
             currentIndex === index ? (
               <Animated.View
@@ -229,36 +207,21 @@ export const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({
                 entering={index === 0 ? FadeInRight : FadeInLeft}
               >
                 <Form
+                  goNext={goNext}
+                  goBack={goBack}
+                  watch={watch}
                   errors={errors}
                   control={control}
-                  isScreenLessThanMaxWidth={isScreenLessThanMaxWidth}
-                  onButtonPress={() =>
-                    index === 0 ? goNext() : handleSubmit(onSubmit)
-                  }
+                  setError={setError}
+                  setValue={setValue}
+                  getValues={getValues}
+                  clearErrors={clearErrors}
                 />
               </Animated.View>
             ) : null
           )}
+          </MaxWidthWrapper>
         </InputContainer>
-
-        <ButtonContainer>
-          {!isFirstPageOfFormActive && (
-            <GoBackButton onPress={goBack}>
-              <FormattedMessage {...messages.back} />
-            </GoBackButton>
-          )}
-
-          <NextStepButton
-            onPress={isLastPageOfFormActive ? handleSubmit(onSubmit) : goNext}
-          >
-            <FormattedMessage
-              {...messages[
-                isLastPageOfFormActive ? "complete_submission" : "next_step"
-              ]}
-            />
-          </NextStepButton>
-        </ButtonContainer>
-      </MaxWidthContainer>
     </Container>
   );
 };
