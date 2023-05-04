@@ -33,6 +33,7 @@ import {
   ButtonContainer,
   MaxWidthWrapper
 } from "./home.styles";
+import { FormStepSix } from "./form-step-six";
 
 const defaultFormSteps: IFormStep[] = [
   {
@@ -80,9 +81,10 @@ const defaultFormSteps: IFormStep[] = [
 const forms = [
   FormStepOne,
   FormStepTwo,
-  FormStepThree,
   FormStepFour,
   FormStepFive,
+  FormStepSix,
+  FormStepThree,
 ];
 
 export const HomeScreen: React.FC<RootStackScreenProps<"HomeScreen">> = ({

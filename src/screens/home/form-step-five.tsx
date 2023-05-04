@@ -8,9 +8,11 @@ import { FormStepProps } from "../../../types";
 import { useFormValidation, useResponsiveScreen } from "../../hooks";
 
 import {
+  Tags,
   Spacer,
   Divider,
   SubTitle,
+  TagContainer,
   ContentTitle,
   GoBackButton,
   InputContents,
@@ -27,21 +29,29 @@ export const FormStepFive: React.FC<FormStepProps> = ({
   control,
   clearErrors,
 }) => {
-  const { titleValidation } = useFormValidation();
+  const { tagsValidation } = useFormValidation();
   const { isDesktopOrLaptop } = useResponsiveScreen();
+
+  const tags = [
+    "PC",
+    "Wars",
+    "avengers",
+    "Alkatraz",
+    "God of war",
+    "unchartered",
+    "The Dark Knight",
+  ];
 
   return (
     <Fragment>
       <ContentContainer>
-      <ContentSubTitle>
-          Step 1/5
-        </ContentSubTitle>
-      <Spacer size={10} />
+        <ContentSubTitle>Step 1/5</ContentSubTitle>
+        <Spacer size={10} />
 
         <ContentTitle>
           <FormattedMessage {...messages.get_started} />
         </ContentTitle>
-      <Spacer size={10} />
+        <Spacer size={10} />
 
         <ContentSubTitle>
           <FormattedMessage {...messages.get_started_subtitle} />
@@ -50,30 +60,31 @@ export const FormStepFive: React.FC<FormStepProps> = ({
 
       <Spacer size={30} />
 
-    <Divider/>
+      <Divider />
       <Spacer size={30} />
 
       <Controller
         name="title"
         control={control}
-        rules={titleValidation}
+        rules={tagsValidation}
         render={({ field: { onChange, ref, ...rest } }) => (
-          <Input
-            {...rest}
-            maxLength={14}
-            onChangeText={onChange}
-            label="Enter Tournament Title"
-            placeholder="Private Alcatraz"
-            // error={errors.host_name}
-          />
+          <Fragment>
+            {tags.length ? (
+              <TagContainer>
+                {tags.map((tag, index) => (
+                  <Tags key={`${tag}_${index}`}>{tag}</Tags>
+                ))}
+              </TagContainer>
+            ) : null}
+          </Fragment>
         )}
       />
 
       <Spacer size={60} />
       <ButtonContainer>
-          <GoBackButton onPress={goBack}>
-            <FormattedMessage {...messages.back} />
-          </GoBackButton>
+        <GoBackButton onPress={goBack}>
+          <FormattedMessage {...messages.back} />
+        </GoBackButton>
         <NextStepButton
           onPress={goNext}
           style={{

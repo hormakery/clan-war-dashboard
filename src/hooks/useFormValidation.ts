@@ -27,6 +27,11 @@ const messages = defineMessages({
     defaultMessage: "Tags is required",
   },
 
+  time_required: {
+    id: "form.validator.time_required",
+    defaultMessage: "Time is required",
+  },
+
   avatar_required: {
     id: "form.validator.avatar_required",
     defaultMessage: "Player avatar is required",
@@ -56,6 +61,19 @@ export const useFormValidation = () => {
     },
   };
 
+  const tagsValidation = {
+    required: {
+      value: true,
+      message: intl.formatMessage(messages.tags_required),
+    },
+  };
+
+  const timeValidation = {
+    required: {
+      value: true,
+      message: intl.formatMessage(messages.team_name_required),
+    },
+  };
   
 
   const teamNameValidation = {
@@ -84,9 +102,13 @@ export const useFormValidation = () => {
       value: true,
       message: intl.formatMessage(messages.price_required),
     },
+
+    
   };
 
   return {
+    tagsValidation,
+    timeValidation,
     priceValidation,
     titleValidation,
     avatarValidation,

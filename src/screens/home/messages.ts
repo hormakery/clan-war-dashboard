@@ -13,9 +13,17 @@ const messages = defineMessages({
     id: "signup.enter_price",
     defaultMessage: "How much does this cost?",
   },
-  enter_tornament_price: {
+  enter_tournament_price: {
     id: "signup.enter_tournament_price",
     defaultMessage: "Please enter Tournament Price",
+  },
+  enter_date: {
+    id: "signup.enter_date",
+    defaultMessage: "Set Tournament date",
+  },
+  enter_Date: {
+    id: "signup.enter_date",
+    defaultMessage: "Set Tournament start Date and end Date",
   },
   meet_the_team_clan: {
     id: "signup.meet_the_team_clan",

@@ -44,7 +44,7 @@ export const FormStepFour: React.FC<FormStepProps> = ({
       <Spacer size={10} />
 
         <ContentSubTitle>
-          <FormattedMessage {...messages.enter_tornament_price} />
+          <FormattedMessage {...messages.enter_tournament_price} />
         </ContentSubTitle>
       </ContentContainer>
 

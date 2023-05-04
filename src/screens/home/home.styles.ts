@@ -1,4 +1,5 @@
 import { Platform } from "react-native";
+import { Chip } from "react-native-paper";
 import styled, { css } from "styled-components/native";
 import {
   Button as __Button,
@@ -18,10 +19,16 @@ export const StepContainer = styled(Container)`
   flex: 0.4;
   flex-direction: column;
   background-color: ${(p) => p.theme.palette.light_background};
-  padding: ${(p) =>p.theme.layout.gutter}px ${(p) =>p.theme.layout.gutter*5}px;
+  padding: ${(p) => p.theme.layout.gutter}px
+    ${(p) => p.theme.layout.gutter * 5}px;
 `;
 
-export const Title = styled.Text<{ error?: boolean; size?: number; wrap?: boolean; isActive?: boolean  }>`
+export const Title = styled.Text<{
+  error?: boolean;
+  size?: number;
+  wrap?: boolean;
+  isActive?: boolean;
+}>`
   opacity: ${({ isActive = true }) => (isActive ? 1 : 0.5)};
   font-family: ${(p) => p.theme.fonts.variants.roboto_bold};
   font-size: ${(p) => p.theme.fonts.scale.value(p.size || 35)}px;
@@ -91,7 +98,6 @@ export const StepNumber = styled.View<{ isActive: boolean }>`
     solid;
 `;
 
-
 export const StepIndex = styled(Title)`
   opacity: 1;
   font-size: ${(p) => p.theme.fonts.scale.value(20)}px;
@@ -100,7 +106,6 @@ export const StepIndex = styled(Title)`
       ? p.theme.colors.light.text
       : p.theme.palette.text};
 `;
-
 
 export const StepDivider = styled(Container)`
   width: ${(p) => (p.isDesktopOrLaptop ? 1 : 50)}px;
@@ -113,11 +118,10 @@ export const StepDivider = styled(Container)`
       : p.theme.layout.gutter / 1.5}px;
 `;
 
-
 export const InputContainer = styled(StepContainer)`
-  flex:1;
+  flex: 1;
   background-color: ${(p) => p.theme.palette.card_background};
- `;
+`;
 
 export const MaxWidthWrapper = styled.View`
   overflow: hidden;
@@ -125,7 +129,7 @@ export const MaxWidthWrapper = styled.View`
   width: ${(p) => p.theme.layout.screen.width - p.theme.layout.gutter * 2}px;
 `;
 
- export const ButtonContainer = styled.View`
+export const ButtonContainer = styled.View`
   flex-direction: row;
   justify-content: flex-end;
   margin: 50px ${(p) => p.theme.layout.gutter}px;
@@ -159,13 +163,11 @@ export const GoBackButton = styled(NextStepButton).attrs<{
   margin: 0px ${(p) => p.theme.layout.gutter}px;
 `;
 
-
 export const InputContents = styled(StepContainer)`
   background-color: ${(p) => p.theme.palette.transparent};
   width: ${(p) => (p.isDesktopOrLaptop ? 95 : 100)}%;
   padding: ${(p) => (p.isDesktopOrLaptop ? 80 : 20)}px 0px 0px 0px;
 `;
-
 
 export const LogoContainer = styled.View`
   padding: ${(p) => p.theme.layout.gutter}px;
@@ -267,8 +269,6 @@ export const UploadIconContainer = styled.View`
   right: ${(p) => p.theme.layout.gutter - 10}px;
 `;
 
-
-
 export const UserContainer = styled.View`
   flex-direction: row;
   align-items: center;
@@ -287,16 +287,14 @@ export const UserContents = styled.View`
 `;
 
 export const ContentContainer = styled.View`
-flex-direction: column;
+  flex-direction: column;
 `;
 
 export const ContentTitle = styled(Title)`
   font-size: ${(p) => p.theme.fonts.scale.value(30)}px;
-
 `;
 export const ContentSubTitle = styled(SubTitle)`
   font-size: ${(p) => p.theme.fonts.scale.value(15)}px;
-      
 `;
 
 export const Divider = styled.View`
@@ -305,296 +303,36 @@ export const Divider = styled.View`
   background-color: ${(p) => p.theme.hexToRGB(p.theme.palette.text, 0.1)};
 `;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export const FormStepWrapper = styled.View`
-//   margin: 0px ${(p) => p.theme.layout.gutter}px;
-//   width: ${(p) => p.theme.layout.screen.width - p.theme.layout.gutter * 2}px;
-//   max-width: ${(p) =>
-//     p.theme.breakpoints.tablet_viewport - p.theme.layout.gutter * 2 - 100}px;
-// `;
-
-// export const FormStepIndicatorContainer = styled.View`
-//   max-height: 60px;
-//   border-radius: ${(p) => p.theme.layout.radius}px;
-//   border: 1px ${(p) => p.theme.hexToRGB(p.theme.palette.text, 0.08)} solid;
-//   margin: 0px ${(p) => p.theme.layout.gutter}px 40px
-//     ${(p) => p.theme.layout.gutter}px;
-// `;
-
-// export const FormStepIndicatorScrollView = styled.ScrollView.attrs({
-//   bounces: false,
-//   horizontal: true,
-//   showsHorizontalScrollIndicator: false,
-//   contentContainerStyle: {
-//     flexGrow: 1,
-//     paddingHorizontal: 5,
-//     justifyContent: "space-between",
-//   },
-// })``;
-
-// export const FormStepScrollViewWrapper = styled.View`
-//   flex-direction: row;
-// `;
-
-
-
-
-// export const ItemSeparatorComponent = styled.View`
-//   height: 50%;
-//   margin: 0px 12px;
-//   align-self: center;
-//   border: 0.5px ${(p) => p.theme.hexToRGB(p.theme.palette.text, 0.08)} solid;
-// `;
-
-
-
-// export const StepTitle = styled(Title)`
-//   text-transform: capitalize;
-//   font-size: ${(p) => p.theme.fonts.scale.value(16)}px;
-// `;
-
-// export const StepSubTitle = styled(SubTitle)`
-//   margin: 0px;
-//   color: ${(p) => p.theme.palette.primary};
-//   opacity: ${(p) => (p.theme.isDarkMode ? 1 : 0.6)};
-//   font-size: ${(p) => p.theme.fonts.scale.value(15)}px;
-// `;
-
-// export const IconButton = styled(__IconButton)`
-//   ${(p) =>
-//     p.disabled &&
-//     css`
-//       background-color: ${p.theme.hexToRGB("#808080", 0.06)};
-//     `}
-// `;
-
-// export const IconButtonContainer = styled.View`
-//   flex-direction: row;
-//   align-items: center;
-//   margin: ${(p) => p.theme.layout.gutter}px 0px;
-// `;
-
-// export const IconButtonContents = styled.View`
-//   margin-left: 5px;
-//   margin-right: 5px;
-// `;
-
-
-
-// export const LogoContainer = styled.View`
-//   padding: ${(p) => p.theme.layout.gutter}px;
-//   border-radius: ${(p) => p.theme.layout.radius * 2}px;
-//   background-color: ${(p) => p.theme.palette.card_background};
-// `;
-
-// export const LogoContents = styled.TouchableOpacity<{ error: boolean }>`
-//   height: 150px;
-//   align-items: center;
-//   padding-bottom: 20px;
-//   justify-content: center;
-//   border-radius: ${(p) => p.theme.layout.radius}px;
-//   border: 1.5px
-//     ${(p) =>
-//       p.theme.hexToRGB(
-//         p.error ? p.theme.palette.error : p.theme.palette.text,
-//         p.error ? 0.7 : 0.2
-//       )}
-//     dashed;
-// `;
-
-// export const Image = styled.Image`
-//   width: 50px;
-//   height: 50px;
-//   margin: ${(p) => p.theme.layout.gutter}px;
-// `;
-
-// export const LogoUploadContainer = styled.View`
-//   margin-top: 20px;
-//   overflow: hidden;
-//   padding: ${(p) => p.theme.layout.gutter}px;
-//   border-radius: ${(p) => p.theme.layout.radius}px;
-//   border: 1.5px ${(p) => p.theme.hexToRGB(p.theme.palette.text, 0.05)} solid;
-// `;
-
-// export const UploadProgress = styled.View<{
-//   progress: number;
-//   isUploadComplete: boolean;
-// }>`
-//   top: 0;
-//   bottom: 0;
-//   left: 0.5px;
-//   right: 0.5px;
-//   position: absolute;
-//   width: ${(p) => p.progress}px;
-//   background-color: ${(p) => p.theme.palette.background};
-//   border-top-left-radius: ${(p) => p.theme.layout.radius - 2}px;
-//   border-bottom-left-radius: ${(p) => p.theme.layout.radius - 2}px;
-//   border-top-right-radius: ${(p) =>
-//     p.isUploadComplete ? p.theme.layout.radius - 2 : 0}px;
-//   border-bottom-right-radius: ${(p) =>
-//     p.isUploadComplete ? p.theme.layout.radius - 2 : 0}px;
-// `;
-
-// export const ProgressSubTitle = styled(SubTitle)`
-//   margin: 0px;
-//   margin-top: 6px;
-// `;
-
-// export const UploadProgressBar = styled.View<{ progress: number }>`
-//   height: 2px;
-//   margin-top: 10px;
-//   width: ${(p) => p.progress}px;
-//   border-radius: ${(p) => p.theme.layout.radius}px;
-//   background-color: ${(p) => p.theme.palette.primary};
-// `;
-
-// export const UploadIcon = styled(__IconButton)<{ isUploadComplete: boolean }>`
-//   transform: scale(0.8);
-//   margin-bottom: ${(p) => (p.isUploadComplete ? 7 : p.theme.layout.gutter)}px;
-// `;
-
-// export const UploadIconContainer = styled.View`
-//   top: 0;
-//   bottom: 0;
-//   position: absolute;
-//   align-items: center;
-//   justify-content: center;
-//   right: ${(p) => p.theme.layout.gutter - 10}px;
-// `;
-
-// export const ErrorMessageContainer = styled(__ErrorMessageContainer)`
-//   margin-bottom: 8px;
-//   padding-right: 8px;
-//   align-items: flex-end;
-//   flex-direction: column;
-// `;
-
-// export const Terms = styled(SubTitle)`
-//   opacity: 1;
-//   text-transform: capitalize;
-//   text-decoration: underline;
-//   color: ${(p) => p.theme.palette.primary};
-//   text-decoration-color: ${(p) => p.theme.palette.primary};
-// `;
-
-// export const TeamScrollView = styled.ScrollView.attrs((p) => ({
-//   horizontal: true,
-//   contentContainerStyle: {
-//     gap: p.theme.layout.gutter,
-//     paddingBottom: p.theme.layout.gutter,
-//   },
-// }))``;
-
-// export const TeamButton = styled.TouchableOpacity<{ error?: boolean }>`
-//   height: 100px;
-//   align-items: center;
-//   justify-content: center;
-//   gap: ${(p) => p.theme.layout.radius * 1.3}px;
-//   border-radius: ${(p) => p.theme.layout.radius}px;
-//   padding: 0px ${(p) => p.theme.layout.gutter * 1.3}px;
-//   background-color: ${(p) => p.theme.palette.card_background};
-//   border: 1.5px
-//     ${(p) =>
-//       p.theme.hexToRGB(
-//         p.error ? p.theme.palette.error : p.theme.palette.text,
-//         p.error ? 0.7 : 0.2
-//       )}
-//     dashed;
-// `;
-
-// export const PlayerName = styled(SubTitle)`
-//   margin: 0px;
-//   color: ${(p) => p.theme.palette.text};
-//   font-size: ${(p) => p.theme.fonts.scale.value(15)}px;
-// `;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export const NextStepButton = styled(__NextStepButton).attrs((p) => ({
-//   buttonColor: p.theme.hexToRGB(
-//     p.theme.isDarkMode ? p.theme.palette.background : p.theme.palette.text,
-//     p.theme.isDarkMode ? 0.6 : 0.3
-//   ),
-// }))`
-//   border-radius: ${(p) => p.theme.layout.radius * 5}px;
-// `;
-
-// export const UserContainer = styled.View`
-//   flex-direction: row;
-//   align-items: center;
-//   padding: ${(p) => p.theme.layout.gutter}px;
-//   border-radius: ${(p) => p.theme.layout.radius}px;
-//   background-color: ${(p) =>
-//     p.theme.hexToRGB(
-//       p.theme.isDarkMode ? p.theme.palette.background : p.theme.palette.text,
-//       p.theme.isDarkMode ? 0.6 : 0.08
-//     )};
-// `;
-
-// export const UserIGN = styled(Title)`
-//   font-size: ${(p) => p.theme.fonts.scale.value(20)}px;
-// `;
-
-// export const UserContents = styled.View`
-//   gap: 3px;
-//   margin-left: ${(p) => p.theme.layout.radius * 2}px;
-// `;
-
-// export const AvatarScrollView = styled.ScrollView.attrs({
-//   horizontal: true,
-//   showsHorizontalScrollIndicator: false,
-//   contentContainerStyle: {
-//     gap: 10,
-//     flexWrap: "wrap",
-//     flexDirection: "row",
-//   },
-// })<{}>`
-//   margin: 8px 0px;
-// `;
-
-// export const Avatar = styled.TouchableOpacity`
-//   border-radius: 100%;
-// `;
+export const TagContainer = styled.View`
+  flex-direction: row;
+  gap: ${(p) => p.theme.layout.gutter / 2}px;
+  margin-top: ${(p) => p.theme.layout.gutter / 2}px;
+`;
+
+export const Tags = styled(Chip).attrs((p) => ({
+  textStyle: {
+    color: p.theme.palette.text,
+    fontSize: p.theme.fonts.scale.value(14),
+    fontFamily: p.theme.fonts.variants.roboto_regular,
+  },
+}))`
+  border-radius: ${(p) => p.theme.layout.radius / 2}px;
+  background-color: ${(p) => p.theme.palette.light_card_background};
+  border: 1px ${(p) => p.theme.hexToRGB(p.theme.palette.text, 0.05)} solid;
+`;
+
+export const DateContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin: ${(p) => p.theme.layout.gutter}px;
+  margin-bottom: ${(p) => p.theme.layout.gutter * 2.5}px;
+`;
+
+export const DateLabel = styled(SubTitle)``;
+export const DateButton = styled(NextStepButton)`
+  background-color: ${(p) => p.theme.palette.background};
+`;
+
+export const Wrapper = styled.View`
+  flex-direction: column;
+`;
